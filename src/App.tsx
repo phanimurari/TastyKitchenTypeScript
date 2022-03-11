@@ -1,26 +1,52 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Route, Switch } from "react-router-dom";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import LoginFormRoute from "./routes/LoginPageRoute";
+import HomeRoute from "./routes/HomeRoute";
+import CartRoute from "./routes/CartRoute";
+import RestuarantDetailsRoute from "./routes/RestuarantDetailsRoute";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import "./App.css";
+import OrderPlacedRoute from "./routes/OrderPlacedRoute";
+import ProfileRoute from "./routes/ProfileRoute";
+
+const routePaths = {
+  loginPagePath: "/login",
+  homePagePath: "/",
+  cartPagePath: "/cart",
+  resturantDetails: "/restaurants-list/:id",
+  orderPlacedPath: "/order-placed",
+  profilePagePath: "/my-profile",
+};
+
+const App = () => (
+  <Switch>
+    <Route exact path={routePaths.loginPagePath} component={LoginFormRoute} />
+    <ProtectedRoute
+      exact
+      path={routePaths.homePagePath}
+      component={HomeRoute}
+    />
+    <ProtectedRoute
+      exact
+      path={routePaths.resturantDetails}
+      component={RestuarantDetailsRoute}
+    />
+    <ProtectedRoute
+      exact
+      path={routePaths.cartPagePath}
+      component={CartRoute}
+    />
+    <ProtectedRoute
+      exact
+      path={routePaths.orderPlacedPath}
+      component={OrderPlacedRoute}
+    />
+    <ProtectedRoute
+      exact
+      path={routePaths.profilePagePath}
+      component={ProfileRoute}
+    />
+  </Switch>
+);
 
 export default App;
