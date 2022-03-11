@@ -54,13 +54,16 @@ const CartList = (props: cartItemsDataTypes) => {
     onClickDecrementItemCount,
     onClickIncremenetItemCount,
   } = props;
-  const filterCartItems = () => cartItemsData.filter(item => item.quantity > 0)
+  const filterCartItems = () =>
+    cartItemsData.filter((item) => item.quantity > 0);
 
-  const rendCartItemsHeader = () => <CartItemsTableHeader>
-    <CartItemTableText>{cartListStrings.item}</CartItemTableText>
-    <CartItemTableText>{cartListStrings.quantity}</CartItemTableText>
-    <CartItemTableText>{cartListStrings.quantity}</CartItemTableText>
-  </CartItemsTableHeader>
+  const rendCartItemsHeader = () => (
+    <CartItemsTableHeader>
+      <CartItemTableText>{cartListStrings.item}</CartItemTableText>
+      <CartItemTableText>{cartListStrings.quantity}</CartItemTableText>
+      <CartItemTableText>{cartListStrings.quantity}</CartItemTableText>
+    </CartItemsTableHeader>
+  );
 
   const renderCartListFooter = (
     addedCartItems: Array<restuarantItemsDataTypes>
@@ -106,14 +109,12 @@ const CartList = (props: cartItemsDataTypes) => {
           {renderCartListFooter(addedCartItems)}
         </CartItemsListContainer>
       );
+    } else {
+      return <h1>Empty Cart List</h1>;
     }
-    else {
-      return <h1>Empty Cart List</h1>
-    }
-  }
+  };
 
   return renderCartList();
-
-}
+};
 
 export default CartList;
