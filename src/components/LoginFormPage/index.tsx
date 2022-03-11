@@ -6,9 +6,17 @@ import {
   LoginImageContainer,
   LoginFormElemenet,
   LoginLandingImage,
+  LogoContainer,
+  HeaderLogoImage,
+  HeaderLogoTitle,
 } from "./styledComponents";
 
 import ButtonElement from "../../common/components/ButtonElement";
+
+
+const headerLogoImageSrc =
+  "https://res.cloudinary.com/imphanimurari/image/upload/v1637500886/Mini%20Projects/Tasty%20Kitchen/Vector_1_kjlhlr.png";
+
 
 const LOGO_IMG_SRC_URL =
   "https://res.cloudinary.com/imphanimurari/image/upload/v1637500886/Mini%20Projects/Tasty%20Kitchen/Vector_1_kjlhlr.png";
@@ -25,6 +33,7 @@ const loginPage = {
   inputTypePassword: "password",
   buttonType: "submit",
   buttonText: "Login",
+  logoText: "Tasty Kitchen",
 };
 
 interface loginFormPropsTypes {
@@ -54,6 +63,10 @@ const LoginFormPage = (props: loginFormPropsTypes) => {
     <LoginFormContainer>
       <FormContainer>
         <LoginFormElemenet onSubmit={submitForm}>
+          <LogoContainer>
+            <HeaderLogoImage src={headerLogoImageSrc} />
+            <HeaderLogoTitle>{loginPage.logoText}</HeaderLogoTitle>
+          </LogoContainer>
           <InputElement
             inputValue={username}
             onChangeMethod={onChangeUsername}
