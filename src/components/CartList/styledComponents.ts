@@ -10,7 +10,7 @@ export const CartItemTableText = styled.p`
 `;
 
 export const CartItemsListContainer = styled.div`
-  ${tw`bg-gray-100 flex flex-col px-2 rounded-lg list-none h-4/6`}
+  ${tw` flex flex-col px-2 rounded-lg list-none h-4/6`}
 `;
 
 export const CartItemsFooterContainer = styled.li`

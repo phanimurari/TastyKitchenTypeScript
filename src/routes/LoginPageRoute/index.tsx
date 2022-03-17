@@ -13,6 +13,7 @@ interface LoginFormStateTypes {
   password: string;
   showSubmitError: boolean;
   errorMsg: string;
+  showPassword: boolean
 }
 
 const loginPage = {
@@ -33,6 +34,7 @@ class LoginFormRoute extends Component<
     password: "",
     showSubmitError: false,
     errorMsg: "",
+    showPassword: false
   };
 
   onChangeUsername = (event: React.ChangeEvent<HTMLInputElement>): void => {
@@ -42,6 +44,12 @@ class LoginFormRoute extends Component<
   onChangePassword = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({ password: event.target.value });
   };
+
+
+  onShowPassword = () => {
+    const { showPassword } = this.state
+    this.setState({ showPassword: !showPassword })
+  }
 
   onSubmitSuccess = (jwtToken: string) => {
     const { history } = this.props;
@@ -82,7 +90,7 @@ class LoginFormRoute extends Component<
   };
 
   renderLoginFormContainer = () => {
-    const { username, password, showSubmitError, errorMsg } = this.state;
+    const { username, password, showSubmitError, errorMsg, showPassword } = this.state;
 
     return (
       <LoginFormPage
@@ -92,7 +100,9 @@ class LoginFormRoute extends Component<
         onChangeUsername={this.onChangeUsername}
         onChangePassword={this.onChangePassword}
         showSubmitError={showSubmitError}
+        onShowPassword={this.onShowPassword}
         errorMsg={errorMsg}
+        showPassword={showPassword}
       />
     );
   };

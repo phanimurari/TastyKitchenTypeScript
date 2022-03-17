@@ -18,5 +18,5 @@ export const SelectIconAndElementContainer = styled.div`
 `;
 
 export const SelectElement = styled.select`
-  ${tw`p-2 mx-1 border-none bg-white outline-none text-base`}
+  ${tw`p-2 mx-1 border-none outline-none text-base`}
 `;

@@ -1,9 +1,10 @@
 import { InputStyledElement } from "./styledComponents";
 
 interface InputElementPropsTypes {
-  inputValue: string;
+  inputValue?: string;
   placeHolderText?: string;
   typeOfInput: string;
+  id?: string;
   onChangeMethod: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

@@ -25,7 +25,7 @@ export const LogoAndHambegerIconContainer = styled.div`
 `;
 
 export const ShowOptionsButton = styled.button`
-  ${tw`bg-transparent`};
+  ${tw``};
   border: none;
 `;
 

@@ -64,6 +64,8 @@ class Header extends Component<RouteComponentProps, HeaderStateTypes> {
     history.replace(routePaths.loginPagePath);
   };
 
+
+
   renderLogoContainer = () => (
     <LogoContainer>
       <HeaderLogoImage src={headerLogoImageSrc} />

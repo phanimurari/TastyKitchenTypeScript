@@ -9,6 +9,8 @@ import {
   LogoContainer,
   HeaderLogoImage,
   HeaderLogoTitle,
+  ShowPasswordContainer,
+  InputLabelElement,
 } from "./styledComponents";
 
 import ButtonElement from "../../common/components/ButtonElement";
@@ -34,6 +36,9 @@ const loginPage = {
   buttonType: "submit",
   buttonText: "Login",
   logoText: "Tasty Kitchen",
+  showPasswordInputType: "checkbox",
+  inputLableText: "Show Password",
+  showPasswordInputTypeId: "showPassword"
 };
 
 interface loginFormPropsTypes {
@@ -42,7 +47,9 @@ interface loginFormPropsTypes {
   submitForm: (event: React.ChangeEvent<HTMLFormElement>) => void;
   onChangeUsername: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  onShowPassword: () => void;
   showSubmitError: boolean;
+  showPassword: boolean,
   errorMsg: string;
 }
 
@@ -55,6 +62,8 @@ const LoginFormPage = (props: loginFormPropsTypes) => {
     onChangePassword,
     showSubmitError,
     errorMsg,
+    onShowPassword,
+    showPassword
   } = props;
 
   const renderErrorMessage = () => (showSubmitError ? errorMsg : "");
@@ -73,12 +82,23 @@ const LoginFormPage = (props: loginFormPropsTypes) => {
             placeHolderText={loginPage.userNamePlaceHolder}
             typeOfInput={loginPage.inputTypeText}
           />
+
           <InputElement
             inputValue={password}
             onChangeMethod={onChangePassword}
             placeHolderText={loginPage.passwordPlaceHolder}
-            typeOfInput={loginPage.inputTypePassword}
+            typeOfInput={showPassword ? loginPage.inputTypeText : loginPage.inputTypePassword}
           />
+          <ShowPasswordContainer>
+
+            <InputElement
+              onChangeMethod={onShowPassword}
+              typeOfInput={loginPage.showPasswordInputType}
+              id={loginPage.showPasswordInputTypeId}
+            />
+            <InputLabelElement htmlFor={loginPage.showPasswordInputTypeId}>{loginPage.inputLableText}</InputLabelElement>
+
+          </ShowPasswordContainer>
           <ButtonElement
             buttonText={loginPage.buttonText}
             buttonType={loginPage.buttonType}
