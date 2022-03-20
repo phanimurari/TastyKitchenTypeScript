@@ -7,7 +7,7 @@ const colors = {
   buttonTextColor: "#ffffff",
 };
 
-export const StyledButtonElement = styled.button`align-item: 
+export const StyledButtonElement = styled.button`${tw`cursor-pointer`}align-item: 
 width: 100px;
 background-color: ${colors.loginColor};
 border: none;

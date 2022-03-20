@@ -1,8 +1,5 @@
 import { Component } from "react";
-import Footer from "../../common/components/Footer";
-import Header from "../../common/components/Header";
 import Cart from "../../components/Cart";
-import CartList from "../../components/CartList";
 
 interface restuarantItemsDataTypes {
   id: string;

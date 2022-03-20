@@ -1,4 +1,5 @@
 import { FaStar } from "react-icons/fa";
+import { RESTAURANT_DETAILS } from "../../common/constants/routePathConstants";
 
 import {
   RestaurantNumberOfReviews,
@@ -50,7 +51,7 @@ const RestuarntListComponent = (props: RestuarntListComponentTypes) => {
         const { id, name, cuisine, userRating, imageUrl } = restaurant;
 
         return (
-          <RestuarantLink key={id} to={`${restuarantPath}${id}`}>
+          <RestuarantLink key={id} to={`${RESTAURANT_DETAILS}${id}`}>
             <RestuarantContainer>
               <RestuarantImageContainer>
                 <RestuarantImage src={imageUrl} />

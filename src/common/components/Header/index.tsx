@@ -2,7 +2,6 @@ import { Component } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdClose } from "react-icons/io";
-import Cookies from "js-cookie";
 
 import ButtonElement from "../ButtonElement";
 import {
@@ -13,10 +12,13 @@ import {
   HeaderLogoTitle,
   LogoAndHambegerIconContainer,
   LogoContainer,
+  LogoLink,
   MobileHeader,
   ShowOptionsButton,
   StyledLink,
 } from "./styledComponents";
+import { CART_PATH, PROFILE_PATH, LOGIN_PATH, USER_HOME_PATH } from "../../constants/routePathConstants";
+import { clearUserSession, getAccessToken } from "../../../utils/StorageUtilis";
 
 const headerLogoImageSrc =
   "https://res.cloudinary.com/imphanimurari/image/upload/v1637500886/Mini%20Projects/Tasty%20Kitchen/Vector_1_kjlhlr.png";
@@ -30,12 +32,6 @@ const HeaderPageStrings = {
   profileText: "Profile",
 };
 
-const routePaths = {
-  loginPagePath: "/login",
-  homePagePath: "/",
-  cartPagePath: "/cart",
-  profilePagePath: "/my-profile",
-};
 
 interface HeaderStateTypes {
   isHamberburgerIconClicked: boolean;
@@ -55,38 +51,40 @@ class Header extends Component<RouteComponentProps, HeaderStateTypes> {
 
   onLogOut = () => {
     const { history } = this.props;
-    const token = Cookies.get("jwt_token");
+    const token = getAccessToken()
 
     if (token !== undefined) {
-      Cookies.remove(token);
+      clearUserSession()
     }
 
-    history.replace(routePaths.loginPagePath);
+    history.replace(LOGIN_PATH);
   };
 
 
 
   renderLogoContainer = () => (
-    <LogoContainer>
-      <HeaderLogoImage src={headerLogoImageSrc} />
-      <HeaderLogoTitle>{HeaderPageStrings.headerLogoText}</HeaderLogoTitle>
-    </LogoContainer>
+    <LogoLink to={LOGIN_PATH}>
+      <LogoContainer>
+        <HeaderLogoImage src={headerLogoImageSrc} />
+        <HeaderLogoTitle>{HeaderPageStrings.headerLogoText}</HeaderLogoTitle>
+      </LogoContainer>
+    </LogoLink>
   );
 
   renderMenuOptions = () => {
     const { history } = this.props;
     const { location } = history;
     const { pathname } = location;
-    const isHomePathActive: boolean = pathname === routePaths.homePagePath;
-    const isCartPathActive: boolean = pathname === routePaths.cartPagePath;
+    const isHomePathActive: boolean = pathname === USER_HOME_PATH;
+    const isCartPathActive: boolean = pathname === CART_PATH;
     const isProfileCartPathActive: boolean =
-      pathname === routePaths.profilePagePath;
+      pathname === PROFILE_PATH;
 
     return (
       <HeaderButtonsContainer>
         <HeaderListElement>
           <StyledLink
-            to={routePaths.homePagePath}
+            to={USER_HOME_PATH}
             isLinkActive={isHomePathActive}
           >
             {HeaderPageStrings.homeText}
@@ -94,7 +92,7 @@ class Header extends Component<RouteComponentProps, HeaderStateTypes> {
         </HeaderListElement>
         <HeaderListElement>
           <StyledLink
-            to={routePaths.cartPagePath}
+            to={CART_PATH}
             isLinkActive={isCartPathActive}
           >
             {HeaderPageStrings.cartText}
@@ -102,7 +100,7 @@ class Header extends Component<RouteComponentProps, HeaderStateTypes> {
         </HeaderListElement>
         <HeaderListElement>
           <StyledLink
-            to={routePaths.profilePagePath}
+            to={PROFILE_PATH}
             isLinkActive={isProfileCartPathActive}
           >
             {HeaderPageStrings.profileText}

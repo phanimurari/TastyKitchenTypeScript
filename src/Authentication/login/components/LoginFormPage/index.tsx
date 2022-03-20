@@ -1,5 +1,8 @@
-import { Component } from "react";
-import InputElement from "../../common/components/InputElement";
+import { observer } from "mobx-react";
+
+
+
+import InputElement from "../../../../common/components/InputElement";
 import {
   LoginFormContainer,
   FormContainer,
@@ -13,8 +16,7 @@ import {
   InputLabelElement,
 } from "./styledComponents";
 
-import ButtonElement from "../../common/components/ButtonElement";
-
+import ButtonElement from "../../../../common/components/ButtonElement";
 
 const headerLogoImageSrc =
   "https://res.cloudinary.com/imphanimurari/image/upload/v1637500886/Mini%20Projects/Tasty%20Kitchen/Vector_1_kjlhlr.png";
@@ -48,10 +50,11 @@ interface loginFormPropsTypes {
   onChangeUsername: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onShowPassword: () => void;
-  showSubmitError: boolean;
   showPassword: boolean,
-  errorMsg: string;
+  errorMsg: Error | string;
+  isLoading: boolean
 }
+
 
 const LoginFormPage = (props: loginFormPropsTypes) => {
   const {
@@ -60,15 +63,17 @@ const LoginFormPage = (props: loginFormPropsTypes) => {
     submitForm,
     onChangeUsername,
     onChangePassword,
-    showSubmitError,
     errorMsg,
     onShowPassword,
-    showPassword
+    showPassword,
+    isLoading
   } = props;
 
-  const renderErrorMessage = () => (showSubmitError ? errorMsg : "");
+
+  const renderErrorMessage = () => errorMsg
 
   return (
+
     <LoginFormContainer>
       <FormContainer>
         <LoginFormElemenet onSubmit={submitForm}>

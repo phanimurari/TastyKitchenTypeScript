@@ -1,7 +1,7 @@
 import { StyledButtonElement } from "./styledComponents";
 
 interface ButtonElementPropsTypes {
-  buttonText: string;
+  buttonText: any;
   buttonType: any;
   onClickButtonMethod?: () => void;
 }

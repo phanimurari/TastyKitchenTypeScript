@@ -95,7 +95,7 @@ class RestuarantDetailsRoute extends Component<restuarantDetailsStateTypes> {
     const { location } = history;
     const { pathname } = location;
 
-    const resturantId = pathname.split("/")[2];
+    const resturantId = pathname.split("/")[3];
 
     const apiUrl = `${dataFetchUrl}${resturantId}`;
 
