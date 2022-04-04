@@ -5,7 +5,13 @@ import RestuarantDetailsRoute from "../../User/routes/RestuarantDetailsRoute";
 import CartRoute from "../../User/routes/CartRoute";
 import OrderPlacedRoute from "../../User/routes/OrderPlacedRoute";
 import ProfileRoute from "../../User/routes/ProfileRoute";
-import { CART_PATH, ORDER_PLACED, PROFILE_PATH, RESTAURANT_DETAILS, USER_HOME_PATH } from "../constants/routePathConstants";
+import {
+  CART_PATH,
+  ORDER_PLACED,
+  PROFILE_PATH,
+  RESTAURANT_DETAILS,
+  USER_HOME_PATH,
+} from "../constants/routePathConstants";
 
 const routes = [
   <ProtectedRoute

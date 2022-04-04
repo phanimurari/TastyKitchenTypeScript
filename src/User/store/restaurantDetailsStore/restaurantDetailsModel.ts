@@ -1,6 +1,3 @@
-class RestaurantDetailsModel {
+class RestaurantDetailsModel {}
 
-}
-
-
-export { RestaurantDetailsModel }
+export { RestaurantDetailsModel };

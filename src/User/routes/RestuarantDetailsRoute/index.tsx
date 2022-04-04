@@ -57,7 +57,7 @@ const apiStatusConstants = {
   inProgress: "IN_PROGRESS",
 };
 
-@inject('restaurantDetailsStore')
+@inject("restaurantDetailsStore")
 @observer
 class RestuarantDetailsRoute extends Component<restuarantDetailsStateTypes> {
   state = {

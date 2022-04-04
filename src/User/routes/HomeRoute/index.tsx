@@ -13,7 +13,6 @@ import { action } from "mobx";
 import { API_FAILED, API_FETCHING, API_SUCCESS } from "@ib/api-constants";
 import RestaurantsStore from "../../store/restaurantsStore/restaurantsStore";
 
-
 interface carouselDataObjectType {
   imageUrl?: string;
   id: number;
@@ -36,11 +35,10 @@ interface restaurantsType {
 }
 
 interface InjectedProps {
-  carouselStore: CarouselStore,
-  homeStore: HomeStore,
-  restaurantsStore: RestaurantsStore
+  carouselStore: CarouselStore;
+  homeStore: HomeStore;
+  restaurantsStore: RestaurantsStore;
 }
-
 
 interface HomeRouteSateTypes extends InjectedProps {
   carouselData: Array<carouselDataObjectType>;
@@ -53,7 +51,6 @@ interface HomeRouteSateTypes extends InjectedProps {
   searchInput: string;
 }
 
-
 const homeRouteTextStrings = {
   sortByHigh: "Highest",
   sortByLow: "Low",
@@ -62,68 +59,69 @@ const homeRouteTextStrings = {
   totalRestuarants: 0,
 };
 
-
-@inject('carouselStore', 'homeStore', 'restaurantsStore')
+@inject("carouselStore", "homeStore", "restaurantsStore")
 @observer
 class HomeRoute extends Component<HomeRouteSateTypes> {
-
   componentDidMount() {
     this.getCarouselData();
     this.getPopularRestaurants();
   }
 
-  getInjectedProps = (): InjectedProps => this.props as InjectedProps
+  getInjectedProps = (): InjectedProps => this.props as InjectedProps;
 
   getCarouselStore = () => {
-    return this.getInjectedProps().carouselStore
-  }
+    return this.getInjectedProps().carouselStore;
+  };
 
   getHomeStore = () => {
-    return this.getInjectedProps().homeStore
-  }
+    return this.getInjectedProps().homeStore;
+  };
 
   getRestuarantStore = () => {
-    return this.getInjectedProps().restaurantsStore
-  }
+    return this.getInjectedProps().restaurantsStore;
+  };
 
   getCarouselData = async () => {
-    const carouselStore = this.getCarouselStore()
-    await carouselStore.getCarouselData()
+    const carouselStore = this.getCarouselStore();
+    await carouselStore.getCarouselData();
   };
 
   getPopularRestaurants = async () => {
-    const { sortBy, paginationPageCount } = this.getHomeStore()
-    const offset = (paginationPageCount - 1) * homeRouteTextStrings.limit
-    await this.getRestuarantStore().getRestuarants(offset, homeRouteTextStrings.limit, sortBy)
+    const { sortBy, paginationPageCount } = this.getHomeStore();
+    const offset = (paginationPageCount - 1) * homeRouteTextStrings.limit;
+    await this.getRestuarantStore().getRestuarants(
+      offset,
+      homeRouteTextStrings.limit,
+      sortBy
+    );
   };
-
 
   @action.bound
   onChangeSelect = async (value: string) => {
-    const { onChangeSortBy } = this.getHomeStore()
-    await onChangeSortBy(value)
-    this.getPopularRestaurants()
+    const { onChangeSortBy } = this.getHomeStore();
+    await onChangeSortBy(value);
+    this.getPopularRestaurants();
   };
 
   @action.bound
   onDecreasePage = async () => {
-    const { decrementPaginationCount } = this.getHomeStore()
-    await decrementPaginationCount()
-    this.getPopularRestaurants()
+    const { decrementPaginationCount } = this.getHomeStore();
+    await decrementPaginationCount();
+    this.getPopularRestaurants();
   };
 
   @action.bound
   onIncreasePage = async () => {
-    const { incrementPaginationCount } = this.getHomeStore()
-    const totalRestuarants = this.getRestuarantStore().numberOfRestaurants
-    await incrementPaginationCount(totalRestuarants)
-    this.getPopularRestaurants()
+    const { incrementPaginationCount } = this.getHomeStore();
+    const totalRestuarants = this.getRestuarantStore().numberOfRestaurants;
+    await incrementPaginationCount(totalRestuarants);
+    this.getPopularRestaurants();
   };
 
   renderLoadingView = () => <LoaderComponent />;
 
   renderCarouselView = () => {
-    const { carouselData } = this.getCarouselStore()
+    const { carouselData } = this.getCarouselStore();
     return <CarouselComponent carouselData={carouselData} />;
   };
 
@@ -139,7 +137,7 @@ class HomeRoute extends Component<HomeRouteSateTypes> {
   );
 
   renderPagination = () => {
-    const { paginationPageCount } = this.getHomeStore()
+    const { paginationPageCount } = this.getHomeStore();
 
     return (
       <PaginationComponent
@@ -151,8 +149,7 @@ class HomeRoute extends Component<HomeRouteSateTypes> {
   };
 
   renderHomePage = () => {
-
-    const { carouselApiStatus } = this.getCarouselStore()
+    const { carouselApiStatus } = this.getCarouselStore();
 
     switch (carouselApiStatus) {
       case API_FETCHING:
@@ -167,7 +164,7 @@ class HomeRoute extends Component<HomeRouteSateTypes> {
   };
 
   renderResutarants = () => {
-    const { restaurantsApiStatus } = this.getRestuarantStore()
+    const { restaurantsApiStatus } = this.getRestuarantStore();
 
     switch (restaurantsApiStatus) {
       case API_FETCHING:

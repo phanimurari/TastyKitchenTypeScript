@@ -1,6 +1,6 @@
 import Cookie from "js-cookie";
 
-export const ACCESS_TOKEN = 'jwt_token';
+export const ACCESS_TOKEN = "jwt_token";
 
 export function getCookie(key: string) {
   return Cookie.get(key);
@@ -18,7 +18,6 @@ export function getAccessToken() {
 }
 
 export function setAccessToken(accessToken: string) {
-
   setCookie(ACCESS_TOKEN, accessToken);
 }
 

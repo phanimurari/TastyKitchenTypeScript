@@ -75,10 +75,9 @@ class LoginFormRoute extends Component<RouteComponentProps> {
       const userDetails = { username, password };
       await this.getAuthStore().userLogin(userDetails);
       if (getAccessToken() !== undefined) {
-        this.redirectPage()
-      }
-      else if (this.getAuthStore().userLoginApiError !== '') {
-        this.errorMsg = this.getAuthStore().userLoginApiError
+        this.redirectPage();
+      } else if (this.getAuthStore().userLoginApiError !== "") {
+        this.errorMsg = this.getAuthStore().userLoginApiError;
       }
     } else {
       this.errorMsg = errorMessage;

@@ -11,22 +11,23 @@ import RestaurantsStore from "../User/store/restaurantsStore/restaurantsStore";
 const authService = new AuthAPIService();
 const authStore = new AuthStore(authService);
 
-const carouseService = new CarouselApiService()
+const carouseService = new CarouselApiService();
 const carouselStore = new CarouselStore(carouseService);
 
-const homeStore = new HomeStore()
+const homeStore = new HomeStore();
 
-const restaurantsService = new RestaurantsService()
-const restaurantsStore = new RestaurantsStore(restaurantsService)
+const restaurantsService = new RestaurantsService();
+const restaurantsStore = new RestaurantsStore(restaurantsService);
 
-
-const restaurantDetailsService = new RestaurantDetailsService()
-const restaurantDetailsStore = new RestaurantDetailsStore(restaurantDetailsService)
+const restaurantDetailsService = new RestaurantDetailsService();
+const restaurantDetailsStore = new RestaurantDetailsStore(
+  restaurantDetailsService
+);
 
 export default {
   authStore,
   homeStore,
   carouselStore,
   restaurantsStore,
-  restaurantDetailsStore
+  restaurantDetailsStore,
 };

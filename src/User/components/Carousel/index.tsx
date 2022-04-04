@@ -9,7 +9,6 @@ import {
   StyledListElement,
 } from "./styledComponents";
 
-
 interface carouselDatPropsTypes {
   carouselData: Array<carouselDataObjectType>;
 }
