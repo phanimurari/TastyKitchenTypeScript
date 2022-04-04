@@ -3,107 +3,99 @@ import { action, observable } from "mobx";
 import { inject, observer } from "mobx-react";
 import { Redirect, RouteComponentProps } from "react-router-dom";
 import LoginFormPage from "../../components/LoginFormPage";
-import { setCookie } from "../../../../utils/StorageUtilis";
+import { getAccessToken, setCookie } from "../../../../utils/StorageUtilis";
 import { USER_HOME_PATH } from "../../../../common/constants/routePathConstants";
 
 import AuthStore from "../../store/authStore";
 import { isLoggedIn } from "../../../../utils/authUtilis";
-import { goToAdminDashBoard, goToUserDashBoard } from "../../../../utils/navigationUtilis";
+import {
+  goToAdminDashBoard,
+  goToUserDashBoard,
+} from "../../../../utils/navigationUtilis";
 
-
-const errorMessage = "Incorrect username or password"
+const errorMessage = "Incorrect username or password";
 
 interface InjectedProps extends RouteComponentProps {
-  authStore: AuthStore
-  onChangeEventType: React.ChangeEvent<HTMLInputElement>
+  authStore: AuthStore;
+  onChangeEventType: React.ChangeEvent<HTMLInputElement>;
 }
 
-@inject('authStore')
+@inject("authStore")
 @observer
-class LoginFormRoute extends Component<
-RouteComponentProps
-> {
-  @observable username: string
-  @observable password: string
-  @observable showSubmitError: boolean
-  @observable errorMsg: string | Error
-  @observable showPassword: boolean
-  @observable isLoading: boolean
+class LoginFormRoute extends Component<RouteComponentProps> {
+  @observable username: string;
+  @observable password: string;
+  @observable showSubmitError: boolean;
+  @observable errorMsg: string | Error;
+  @observable showPassword: boolean;
+  @observable isLoading: boolean;
 
   constructor(props: any) {
-    super(props)
-    this.username = ''
-    this.password = ''
-    this.showSubmitError = false
-    this.errorMsg = ''
-    this.showPassword = false
-    this.isLoading = false
+    super(props);
+    this.username = "";
+    this.password = "";
+    this.showSubmitError = false;
+    this.errorMsg = "";
+    this.showPassword = false;
+    this.isLoading = false;
   }
 
-  getInjectedProps = (): InjectedProps => this.props as InjectedProps
-
+  getInjectedProps = (): InjectedProps => this.props as InjectedProps;
 
   getAuthStore = () => {
-    return this.getInjectedProps().authStore
-  }
+    return this.getInjectedProps().authStore;
+  };
 
   @action.bound onChangeUsername(event: React.ChangeEvent<HTMLInputElement>) {
-    this.username = event.target.value
+    this.username = event.target.value;
   }
 
   @action.bound onChangePassword(event: React.ChangeEvent<HTMLInputElement>) {
-    this.password = event.target.value
+    this.password = event.target.value;
   }
 
   @action.bound onShowPassword = () => {
-    const { showPassword } = this
-    this.showPassword = !showPassword
-  }
+    const { showPassword } = this;
+    this.showPassword = !showPassword;
+  };
 
   @action.bound onSubmitSuccess = (jwtToken: string) => {
     const { history } = this.props;
 
-    setCookie("jwt_token", jwtToken)
+    setCookie("jwt_token", jwtToken);
 
     history.replace(USER_HOME_PATH);
   };
 
   submitForm = async (event: React.ChangeEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const { username, password } = this
-    if (username !== '' && password !== '') {
-      this.isLoading = true
+    const { username, password } = this;
+    if (username !== "" && password !== "") {
+      this.isLoading = true;
       const userDetails = { username, password };
-      await this.getAuthStore().userLogin(userDetails)
-      this.isLoading = false
-      if (this.getAuthStore().userLoginApiError === '') {
+      await this.getAuthStore().userLogin(userDetails);
+      if (getAccessToken() !== undefined) {
         this.redirectPage()
       }
-      else {
+      else if (this.getAuthStore().userLoginApiError !== '') {
         this.errorMsg = this.getAuthStore().userLoginApiError
       }
+    } else {
+      this.errorMsg = errorMessage;
     }
-    else {
-      this.errorMsg = errorMessage
-    }
-
   };
 
-
   @action.bound redirectPage() {
-    const { isAdmin } = this.getAuthStore()
+    const { isAdmin } = this.getAuthStore();
     if (isAdmin && isLoggedIn()) {
-      goToAdminDashBoard(this.getInjectedProps().history)
-    }
-    else if (!isAdmin && isLoggedIn()) {
-      goToUserDashBoard(this.getInjectedProps().history)
+      goToAdminDashBoard(this.getInjectedProps().history);
+    } else if (!isAdmin && isLoggedIn()) {
+      goToUserDashBoard(this.getInjectedProps().history);
     }
   }
 
-
-
   renderLoginFormContainer = () => {
-    const { username, password, errorMsg, showPassword, isLoading } = this
+    const { username, password, errorMsg, showPassword, isLoading } = this;
 
     return (
       <LoginFormPage
@@ -121,7 +113,11 @@ RouteComponentProps
   };
 
   render() {
-    return isLoggedIn() ? <Redirect to={USER_HOME_PATH} /> : this.renderLoginFormContainer();
+    return isLoggedIn() ? (
+      <Redirect to={USER_HOME_PATH} />
+    ) : (
+      this.renderLoginFormContainer()
+    );
   }
 }
 

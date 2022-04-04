@@ -17,7 +17,12 @@ import {
   ShowOptionsButton,
   StyledLink,
 } from "./styledComponents";
-import { CART_PATH, PROFILE_PATH, LOGIN_PATH, USER_HOME_PATH } from "../../constants/routePathConstants";
+import {
+  CART_PATH,
+  PROFILE_PATH,
+  LOGIN_PATH,
+  USER_HOME_PATH,
+} from "../../constants/routePathConstants";
 import { clearUserSession, getAccessToken } from "../../../utils/StorageUtilis";
 
 const headerLogoImageSrc =
@@ -31,7 +36,6 @@ const HeaderPageStrings = {
   typeOfButton: "button",
   profileText: "Profile",
 };
-
 
 interface HeaderStateTypes {
   isHamberburgerIconClicked: boolean;
@@ -51,16 +55,14 @@ class Header extends Component<RouteComponentProps, HeaderStateTypes> {
 
   onLogOut = () => {
     const { history } = this.props;
-    const token = getAccessToken()
+    const token = getAccessToken();
 
     if (token !== undefined) {
-      clearUserSession()
+      clearUserSession();
     }
 
     history.replace(LOGIN_PATH);
   };
-
-
 
   renderLogoContainer = () => (
     <LogoLink to={LOGIN_PATH}>
@@ -77,32 +79,22 @@ class Header extends Component<RouteComponentProps, HeaderStateTypes> {
     const { pathname } = location;
     const isHomePathActive: boolean = pathname === USER_HOME_PATH;
     const isCartPathActive: boolean = pathname === CART_PATH;
-    const isProfileCartPathActive: boolean =
-      pathname === PROFILE_PATH;
+    const isProfileCartPathActive: boolean = pathname === PROFILE_PATH;
 
     return (
       <HeaderButtonsContainer>
         <HeaderListElement>
-          <StyledLink
-            to={USER_HOME_PATH}
-            isLinkActive={isHomePathActive}
-          >
+          <StyledLink to={USER_HOME_PATH} isLinkActive={isHomePathActive}>
             {HeaderPageStrings.homeText}
           </StyledLink>
         </HeaderListElement>
         <HeaderListElement>
-          <StyledLink
-            to={CART_PATH}
-            isLinkActive={isCartPathActive}
-          >
+          <StyledLink to={CART_PATH} isLinkActive={isCartPathActive}>
             {HeaderPageStrings.cartText}
           </StyledLink>
         </HeaderListElement>
         <HeaderListElement>
-          <StyledLink
-            to={PROFILE_PATH}
-            isLinkActive={isProfileCartPathActive}
-          >
+          <StyledLink to={PROFILE_PATH} isLinkActive={isProfileCartPathActive}>
             {HeaderPageStrings.profileText}
           </StyledLink>
         </HeaderListElement>

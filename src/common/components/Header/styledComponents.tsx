@@ -40,7 +40,9 @@ export const DesktopHeader = styled.div`
   }
 `;
 
-export const LogoLink = styled(Link)`text-decoration: none`
+export const LogoLink = styled(Link)`
+  text-decoration: none;
+`;
 
 export const LogoContainer = styled.div`
   display: flex;

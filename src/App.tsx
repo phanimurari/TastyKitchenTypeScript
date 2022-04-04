@@ -6,13 +6,13 @@ import { LOGIN_PATH } from "./common/constants/routePathConstants";
 import "./App.css";
 import stores from "./stores";
 
-const App = () =>
+const App = () => (
   <Provider {...stores}>
-
     <Switch>
       <Route exact path={LOGIN_PATH} component={LoginFormRoute} />
       {routes}
     </Switch>
   </Provider>
+);
 
 export default App;

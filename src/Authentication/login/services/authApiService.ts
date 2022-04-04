@@ -1,28 +1,31 @@
-
-import { apiMethods } from '../../../common/constants/apiConstants'
-import { networkCallWithApisauce } from '../../../utils/apiUtils'
+import { create } from "apisauce";
+import { apiMethods } from "../../../common/constants/ApiConstants";
+import config from "../../../common/constants/envinornmentConstants";
+import { networkCallWithApisauce } from "../../../utils/apiUtils";
 
 const url = "https://apis.ccbp.in/login";
 
-interface loginObjectType {
-    username: string,
-    password: string
-}
 
 
 class AuthAPIService {
-    api: string
-    constructor() {
-        this.api = url
-    }
+  api: Record<string, any>
 
-    logIn(loginObject: loginObjectType) {
-        return networkCallWithApisauce(
-            this.api,
-            loginObject,
-            apiMethods.post
-        )
-    }
+  constructor() {
+    this.api = create({
+      baseURL: config.BASE_URL
+    })
+
+    console.log(this.api.getBaseURL)
+  }
+
+  logIn(stringifiedLoginObject: string) {
+
+    return networkCallWithApisauce(
+      url,
+      stringifiedLoginObject,
+      apiMethods.post
+    )
+  }
 }
 
-export default AuthAPIService
+export default AuthAPIService;

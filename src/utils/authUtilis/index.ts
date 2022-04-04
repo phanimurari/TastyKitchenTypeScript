@@ -1,9 +1,10 @@
-import { getAccessToken } from "../StorageUtilis"
+import { getAccessToken } from "../StorageUtilis";
 
 export const isLoggedIn = () => {
-    if (getAccessToken() !== undefined) {
-        return true
-    } else {
-        return false
-    }
-}
+
+  if (getAccessToken() !== undefined) {
+    return true;
+  } else {
+    return false;
+  }
+};

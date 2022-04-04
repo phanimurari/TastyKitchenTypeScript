@@ -7,12 +7,12 @@ const colors = {
   buttonTextColor: "#ffffff",
 };
 
-export const StyledButtonElement = styled.button`${tw`cursor-pointer`}align-item: 
-width: 100px;
-background-color: ${colors.loginColor};
-border: none;
-${tw`p-2`};
-${tw`rounded-md`};
-color: ${colors.buttonTextColor};
-min-width:30px
+export const StyledButtonElement = styled.button`
+  ${tw`cursor-pointer`}align-item: width: 100px;
+  background-color: ${colors.loginColor};
+  border: none;
+  ${tw`p-2`};
+  ${tw`rounded-md`};
+  color: ${colors.buttonTextColor};
+  min-width: 30px;
 `;

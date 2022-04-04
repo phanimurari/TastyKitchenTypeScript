@@ -4,7 +4,6 @@ import { isLoggedIn } from "../authUtilis";
 import { LOGIN_PATH } from "../../common/constants/routePathConstants";
 
 const ProtectedRoute = (props: RouteProps) => {
-
   if (isLoggedIn()) {
     return <Route {...props} />;
   }

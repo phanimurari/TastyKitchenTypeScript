@@ -1,7 +1,5 @@
 import { observer } from "mobx-react";
 
-
-
 import InputElement from "../../../../common/components/InputElement";
 import {
   LoginFormContainer,
@@ -21,7 +19,6 @@ import ButtonElement from "../../../../common/components/ButtonElement";
 const headerLogoImageSrc =
   "https://res.cloudinary.com/imphanimurari/image/upload/v1637500886/Mini%20Projects/Tasty%20Kitchen/Vector_1_kjlhlr.png";
 
-
 const LOGO_IMG_SRC_URL =
   "https://res.cloudinary.com/imphanimurari/image/upload/v1637500886/Mini%20Projects/Tasty%20Kitchen/Vector_1_kjlhlr.png";
 
@@ -40,7 +37,7 @@ const loginPage = {
   logoText: "Tasty Kitchen",
   showPasswordInputType: "checkbox",
   inputLableText: "Show Password",
-  showPasswordInputTypeId: "showPassword"
+  showPasswordInputTypeId: "showPassword",
 };
 
 interface loginFormPropsTypes {
@@ -50,11 +47,10 @@ interface loginFormPropsTypes {
   onChangeUsername: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onChangePassword: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onShowPassword: () => void;
-  showPassword: boolean,
+  showPassword: boolean;
   errorMsg: Error | string;
-  isLoading: boolean
+  isLoading: boolean;
 }
-
 
 const LoginFormPage = (props: loginFormPropsTypes) => {
   const {
@@ -66,14 +62,12 @@ const LoginFormPage = (props: loginFormPropsTypes) => {
     errorMsg,
     onShowPassword,
     showPassword,
-    isLoading
+    isLoading,
   } = props;
 
-
-  const renderErrorMessage = () => errorMsg
+  const renderErrorMessage = () => errorMsg;
 
   return (
-
     <LoginFormContainer>
       <FormContainer>
         <LoginFormElemenet onSubmit={submitForm}>
@@ -92,17 +86,21 @@ const LoginFormPage = (props: loginFormPropsTypes) => {
             inputValue={password}
             onChangeMethod={onChangePassword}
             placeHolderText={loginPage.passwordPlaceHolder}
-            typeOfInput={showPassword ? loginPage.inputTypeText : loginPage.inputTypePassword}
+            typeOfInput={
+              showPassword
+                ? loginPage.inputTypeText
+                : loginPage.inputTypePassword
+            }
           />
           <ShowPasswordContainer>
-
             <InputElement
               onChangeMethod={onShowPassword}
               typeOfInput={loginPage.showPasswordInputType}
               id={loginPage.showPasswordInputTypeId}
             />
-            <InputLabelElement htmlFor={loginPage.showPasswordInputTypeId}>{loginPage.inputLableText}</InputLabelElement>
-
+            <InputLabelElement htmlFor={loginPage.showPasswordInputTypeId}>
+              {loginPage.inputLableText}
+            </InputLabelElement>
           </ShowPasswordContainer>
           <ButtonElement
             buttonText={loginPage.buttonText}
