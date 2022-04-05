@@ -2,7 +2,7 @@ import { apiMethods } from "../../../common/constants/ApiConstants";
 import { networkCallWithApisauce } from "../../../utils/apiUtils";
 
 class RestaurantDetailsService {
-  getRestaurants(url: string) {
+  getRestaurantDetails(url: string) {
     return networkCallWithApisauce(url, apiMethods.get);
   }
 }

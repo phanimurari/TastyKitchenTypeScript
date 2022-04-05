@@ -13,42 +13,10 @@ import { action } from "mobx";
 import { API_FAILED, API_FETCHING, API_SUCCESS } from "@ib/api-constants";
 import RestaurantsStore from "../../store/restaurantsStore/restaurantsStore";
 
-interface carouselDataObjectType {
-  imageUrl?: string;
-  id: number;
-  image_url?: string;
-}
-
-interface userRatingTypes {
-  rating_text: string;
-  rating_color: string;
-  total_reviews: number;
-  rating: number;
-}
-
-interface restaurantsType {
-  id: number;
-  name: string;
-  user_rating: userRatingTypes;
-  cuisine: string;
-  image_url: string;
-}
-
 interface InjectedProps {
   carouselStore: CarouselStore;
   homeStore: HomeStore;
   restaurantsStore: RestaurantsStore;
-}
-
-interface HomeRouteSateTypes extends InjectedProps {
-  carouselData: Array<carouselDataObjectType>;
-  restuarantsData: Array<restaurantsType>;
-  sortBy: string;
-  apiStatusOfCarouselData: string;
-  apiStatusOfRestuarant: string;
-  totalNumberOfRestuarants: number | null;
-  paginationPageCount: number;
-  searchInput: string;
 }
 
 const homeRouteTextStrings = {
@@ -61,7 +29,7 @@ const homeRouteTextStrings = {
 
 @inject("carouselStore", "homeStore", "restaurantsStore")
 @observer
-class HomeRoute extends Component<HomeRouteSateTypes> {
+class HomeRoute extends Component {
   componentDidMount() {
     this.getCarouselData();
     this.getPopularRestaurants();

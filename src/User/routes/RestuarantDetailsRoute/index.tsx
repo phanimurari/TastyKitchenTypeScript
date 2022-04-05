@@ -1,29 +1,11 @@
 import { Component } from "react";
-import Cookies from "js-cookie";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import LoaderComponent from "../../../common/components/Loader";
 import RestuarantDetails from "../../components/RestuarantDetails";
 import { inject, observer } from "mobx-react";
+import RestaurantDetailsStore from "../../store/restaurantDetailsStore/restaurantDetailsStore";
+import { API_FAILED, API_FETCHING, API_SUCCESS } from "@ib/api-constants";
 
-interface restuarantDataTypes {
-  id: string;
-
-  imageUrl: string;
-
-  restuarantName: string;
-
-  restuarantCusine: string;
-
-  restuarantLocation: string;
-
-  restuarantRating: number;
-
-  noOfReviews: number;
-
-  costForTwo: number;
-
-  itemsCount: number;
-}
 
 interface restuarantItemsDataTypes {
   id: string;
@@ -41,143 +23,36 @@ interface itemsDataTypes {
   itemsData: Array<restuarantItemsDataTypes>;
 }
 
-interface restuarantDetailsStateTypes extends RouteComponentProps {
-  resturantData: restuarantDataTypes;
-  itemsData: itemsDataTypes;
-  apiStatus: string;
-  addToCart: boolean;
+interface InjectedProps extends RouteComponentProps {
+  restaurantDetailsStore: RestaurantDetailsStore;
 }
 
-const dataFetchUrl = "https://apis.ccbp.in/restaurants-list/";
-
-const apiStatusConstants = {
-  initial: "INITIAL",
-  success: "SUCCESS",
-  failure: "FAILURE",
-  inProgress: "IN_PROGRESS",
-};
 
 @inject("restaurantDetailsStore")
 @observer
-class RestuarantDetailsRoute extends Component<restuarantDetailsStateTypes> {
-  state = {
-    resturantData: {
-      id: "",
-      imageUrl: "",
-      restuarantName: "",
-      restuarantCusine: "",
-      restuarantLocation: "",
-      restuarantRating: 0,
-      noOfReviews: 0,
-      costForTwo: 0,
-      itemsCount: 0,
-    },
-    itemsData: [
-      {
-        id: "",
-        name: "",
-        cost: 0,
-        foodType: "",
-        imageUrl: "",
-        rating: 0,
-        quantity: 0,
-      },
-    ],
-    apiStatus: apiStatusConstants.initial,
-    addToCart: true,
-  };
-
+class RestuarantDetailsRoute extends Component<InjectedProps> {
   componentDidMount() {
     this.getRestuarantDetails();
   }
 
-  getRestuarantDetails = async () => {
-    this.setState({ apiStatus: apiStatusConstants.inProgress });
+  getInjectedProps = (): InjectedProps => this.props as InjectedProps;
 
+
+  getRestaurantDetailsStore = () => this.getInjectedProps().restaurantDetailsStore;
+
+
+  getRestuarantDetails = async () => {
     const { history } = this.props;
     const { location } = history;
     const { pathname } = location;
-
     const resturantId = pathname.split("/")[3];
-
-    const apiUrl = `${dataFetchUrl}${resturantId}`;
-
-    const jwtToken = Cookies.get("jwt_token");
-    const options = {
-      headers: {
-        Authorization: `Bearer ${jwtToken}`,
-      },
-      method: "GET",
-    };
-    const response = await fetch(apiUrl, options);
-    if (response.ok === true) {
-      const fetchedData = await response.json();
-
-      const caseConvertedResturantData = {
-        id: fetchedData.id,
-        imageUrl: fetchedData.image_url,
-        restuarantName: fetchedData.name,
-        restuarantCusine: fetchedData.cuisine,
-        restuarantLocation: fetchedData.location,
-        restuarantRating: fetchedData.rating,
-        noOfReviews: fetchedData.reviews_count,
-        costForTwo: fetchedData.cost_for_two,
-        itemsCount: fetchedData.items_count,
-      };
-
-      const caseConvertedFoodItemsData = fetchedData.food_items.map(
-        (item: restuarantItemsDataTypes) => ({
-          cost: item.cost,
-          foodType: item.food_type,
-          id: item.id,
-          imageUrl: item.image_url,
-          name: item.name,
-          rating: item.rating,
-          quantity: 0,
-        })
-      );
-
-      const dataFromLocalStorage = localStorage.getItem(
-        "resturantSpecificData"
-      );
-
-      if (dataFromLocalStorage !== null) {
-        const itemsDataFromLocalStorage = JSON.parse(dataFromLocalStorage)
-          .itemsData;
-        const updateFetchedDataQuantity = caseConvertedFoodItemsData.map(
-          (fetchedItem: restuarantItemsDataTypes) => {
-            itemsDataFromLocalStorage.find(
-              (itemInLocalStorage: restuarantItemsDataTypes) => {
-                if (itemInLocalStorage.id === fetchedItem.id) {
-                  fetchedItem.quantity = itemInLocalStorage.quantity;
-                }
-              }
-            );
-            return fetchedItem;
-          }
-        );
-        this.setState({
-          resturantData: caseConvertedResturantData,
-          itemsData: updateFetchedDataQuantity,
-          apiStatus: apiStatusConstants.success,
-        });
-      } else {
-        this.setState({
-          resturantData: caseConvertedResturantData,
-          itemsData: caseConvertedFoodItemsData,
-          apiStatus: apiStatusConstants.success,
-        });
-      }
-    } else {
-      this.setState({
-        apiStatus: apiStatusConstants.failure,
-      });
-    }
+    await this.getRestaurantDetailsStore().getRestuarantDetails(resturantId)
   };
 
   onClickDecrementFoodItemQuantity = async (id: string) => {
-    const { resturantData, itemsData } = this.state;
-    const decrementItemsDataQuantity = itemsData.map((item) => {
+    const { restaurantFoodItemsList } = this.getRestaurantDetailsStore()
+
+    const decrementItemsDataQuantity = restaurantFoodItemsList.map((item) => {
       if (item.id === id && item.quantity > 0) {
         item.quantity -= 1;
       }
@@ -224,8 +99,10 @@ class RestuarantDetailsRoute extends Component<restuarantDetailsStateTypes> {
   };
 
   onClickIncrementFoodItemQuantity = (id: string) => {
-    const { itemsData, resturantData } = this.state;
-    const incrementedItemsDataQuantity = itemsData.map((item) => {
+    const { restaurantFoodItemsList } = this.getRestaurantDetailsStore()
+
+
+    const incrementedItemsDataQuantity = restaurantFoodItemsList.map((item) => {
       if (item.id === id) {
         item.quantity += 1;
       }
@@ -258,7 +135,7 @@ class RestuarantDetailsRoute extends Component<restuarantDetailsStateTypes> {
           updatedLocalStorageObject
         );
       } else {
-        const findSelectedItemInItemsDataFromState = itemsData.find(
+        const findSelectedItemInItemsDataFromState = restaurantFoodItemsList.find(
           (item: restuarantItemsDataTypes) => item.id === id
         );
         const updatedItemsData = [
@@ -274,7 +151,7 @@ class RestuarantDetailsRoute extends Component<restuarantDetailsStateTypes> {
         );
       }
     } else {
-      const addedItem = itemsData.find(
+      const addedItem = restaurantFoodItemsList.find(
         (item: restuarantItemsDataTypes) => item.id === id
       );
       const updatedAddItemArray = [addedItem];
@@ -292,11 +169,11 @@ class RestuarantDetailsRoute extends Component<restuarantDetailsStateTypes> {
   renderFailureView = () => <h1>Failure view</h1>;
 
   renderRestuarantDetails = () => {
-    const { resturantData, itemsData } = this.state;
+    const { restaurantDetails, restaurantFoodItemsList } = this.getRestaurantDetailsStore()
     return (
       <RestuarantDetails
-        resturantData={resturantData}
-        itemsData={itemsData}
+        resturantData={restaurantDetails}
+        itemsData={restaurantFoodItemsList}
         onClickIncrementFoodItemQuantity={this.onClickIncrementFoodItemQuantity}
         onClickDecrementFoodItemQuantity={this.onClickDecrementFoodItemQuantity}
       />
@@ -304,17 +181,21 @@ class RestuarantDetailsRoute extends Component<restuarantDetailsStateTypes> {
   };
 
   renderBasedOnApiStatus = () => {
-    const { apiStatus } = this.state;
-    switch (apiStatus) {
-      case apiStatusConstants.inProgress:
+
+    const { restaurantDetailsApiStatus } = this.getRestaurantDetailsStore()
+
+    switch (restaurantDetailsApiStatus) {
+      case API_FETCHING:
         return this.renderLoadingView();
-      case apiStatusConstants.success:
+      case API_SUCCESS:
         return this.renderRestuarantDetails();
-      case apiStatusConstants.failure:
+      case API_FAILED:
         return this.renderFailureView();
       default:
         return null;
     }
+
+
   };
 
   render() {

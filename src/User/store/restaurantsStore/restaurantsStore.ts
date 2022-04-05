@@ -10,6 +10,8 @@ import RestaurantsService from "../../services/restaurantsService/RestaurantsSer
 import { restuarantsDataObjectType } from "../types";
 import { RestaurantModel } from "./restaurantModel";
 
+const getPopularRestauartsApiURL = "https://apis.ccbp.in/restaurants-list";
+
 class RestaurantsStore {
   @observable restuarantsData: Array<RestaurantModel>;
   @observable restaurantsApiStatus: number;
@@ -35,7 +37,7 @@ class RestaurantsStore {
   ) => {
     this.restaurantsApiStatus = API_FETCHING;
 
-    const getPopularRestauartsApiURL = "https://apis.ccbp.in/restaurants-list";
+
     const url = `${getPopularRestauartsApiURL}?offset=${offset}&limit=${limit}&sort_by_rating=${sortBy}`;
     const restaurantsPromise = this.restaurantsService.getRestaurants(url);
 
