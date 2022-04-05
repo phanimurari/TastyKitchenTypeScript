@@ -5,28 +5,11 @@ import RestuarantDetails from "../../components/RestuarantDetails";
 import { inject, observer } from "mobx-react";
 import RestaurantDetailsStore from "../../store/restaurantDetailsStore/restaurantDetailsStore";
 import { API_FAILED, API_FETCHING, API_SUCCESS } from "@ib/api-constants";
-
-
-interface restuarantItemsDataTypes {
-  id: string;
-  name: string;
-  cost: number;
-  food_type?: string;
-  foodType?: string;
-  image_url?: string;
-  imageUrl?: string;
-  rating: number;
-  quantity: number;
-}
-
-interface itemsDataTypes {
-  itemsData: Array<restuarantItemsDataTypes>;
-}
+import { foodItemObjectTypes } from "../../store/types";
 
 interface InjectedProps extends RouteComponentProps {
   restaurantDetailsStore: RestaurantDetailsStore;
 }
-
 
 @inject("restaurantDetailsStore")
 @observer
@@ -65,7 +48,7 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
       const itemsDataFromLocalStorage = JSON.parse(dataFromLocalStorage)
         .itemsData;
       const findSelectedItemInItemsDataFromLocalStorage = itemsDataFromLocalStorage.find(
-        (item: restuarantItemsDataTypes) => item.id === id
+        (item: foodItemObjectTypes) => item.id === id
       );
 
       if (
@@ -73,7 +56,7 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
         findSelectedItemInItemsDataFromLocalStorage.quantity > 0
       ) {
         const decrementQuanityInItemsDataInLocalStorage = itemsDataFromLocalStorage.map(
-          (item: restuarantItemsDataTypes) => {
+          (item: foodItemObjectTypes) => {
             if (item.id === id && item.quantity > 0) {
               item.quantity -= 1;
             }
@@ -82,7 +65,7 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
         );
 
         const filteringOutTheItemsWIthQuantityZero = decrementQuanityInItemsDataInLocalStorage.filter(
-          (item: restuarantItemsDataTypes) => item.quantity > 0
+          (item: foodItemObjectTypes) => item.quantity > 0
         );
 
         const updatedLocalStorageObject = JSON.stringify({
@@ -115,12 +98,12 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
       const itemsDataFromLocalStorage = JSON.parse(dataFromLocalStorage)
         .itemsData;
       const findSelectedItemInItemsDataFromLocalStorage = itemsDataFromLocalStorage.find(
-        (item: restuarantItemsDataTypes) => item.id === id
+        (item: foodItemObjectTypes) => item.id === id
       );
 
       if (findSelectedItemInItemsDataFromLocalStorage !== undefined) {
         const incrementQuanityInItemsDataInLocalStorage = itemsDataFromLocalStorage.map(
-          (item: restuarantItemsDataTypes) => {
+          (item: foodItemObjectTypes) => {
             if (item.id === id) {
               item.quantity += 1;
             }
@@ -136,7 +119,7 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
         );
       } else {
         const findSelectedItemInItemsDataFromState = restaurantFoodItemsList.find(
-          (item: restuarantItemsDataTypes) => item.id === id
+          (item: foodItemObjectTypes) => item.id === id
         );
         const updatedItemsData = [
           ...itemsDataFromLocalStorage,
@@ -152,7 +135,7 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
       }
     } else {
       const addedItem = restaurantFoodItemsList.find(
-        (item: restuarantItemsDataTypes) => item.id === id
+        (item: foodItemObjectTypes) => item.id === id
       );
       const updatedAddItemArray = [addedItem];
       const updatedLocalStorageObject = JSON.stringify({

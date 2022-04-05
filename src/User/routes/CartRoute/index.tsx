@@ -1,5 +1,6 @@
 import { Component } from "react";
 import Cart from "../../components/Cart";
+import { getResturantSpecificData } from "../../utils/StorageUtilis";
 
 interface restuarantItemsDataTypes {
   id: string;
@@ -37,7 +38,7 @@ class CartRoute extends Component<cartItemsDataTypes> {
   }
 
   getCartItemsDataFromLocalStorage = () => {
-    const resturantSpecificData = localStorage.getItem("resturantSpecificData");
+    const resturantSpecificData = getResturantSpecificData()
     if (resturantSpecificData) {
       const parsedResturantData = JSON.parse(resturantSpecificData);
       const { itemsData } = parsedResturantData;
@@ -54,7 +55,7 @@ class CartRoute extends Component<cartItemsDataTypes> {
       return item;
     });
 
-    const dataFromLocalStorage = localStorage.getItem("resturantSpecificData");
+    const dataFromLocalStorage = getResturantSpecificData()
 
     if (dataFromLocalStorage !== null) {
       const itemsDataFromLocalStorage = JSON.parse(dataFromLocalStorage)
@@ -102,7 +103,7 @@ class CartRoute extends Component<cartItemsDataTypes> {
       return item;
     });
 
-    const dataFromLocalStorage = localStorage.getItem("resturantSpecificData");
+    const dataFromLocalStorage = getResturantSpecificData()
 
     if (dataFromLocalStorage !== null) {
       const itemsDataFromLocalStorage = JSON.parse(dataFromLocalStorage)
