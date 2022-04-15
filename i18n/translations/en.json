@@ -1,0 +1,13 @@
+{
+    "loginPage" : {
+
+        "userNamePlaceHolder" : "Enter Username",
+        "passwordPlaceHolder" : "Enter Password",
+        "inputTypeText" : "text",
+        "inputTypePassword" : "password",
+        "buttonType" : "submit",
+        "buttonText" : "Login"
+
+    }
+
+}
