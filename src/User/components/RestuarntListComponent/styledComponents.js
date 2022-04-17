@@ -8,28 +8,57 @@ const colors = {
 };
 
 export const RestuarantList = styled.ul`
-  ${tw`flex flex-wrap list-none`}
+  ${tw`flex flex-wrap list-none m-0 p-0`};
+  @media screen and (min-width: 768px) {
+    ${tw`px-4 flex justify-center`}
+  }
 `;
 
 export const RestuarantLink = styled(Link)`
   ${tw`no-underline`}
+  @media screen and (max-width: 576px) {
+    ${tw`w-full`}
+  }
+  @media screen and (min-width: 576px) and (max-width: 992px) {
+    ${tw`w-1/2`}
+  }
+  @media screen and (min-width: 992px) {
+    ${tw`w-1/3`}
+  }
 `;
 
 export const RestuarantContainer = styled.li`
-  ${tw`p-2 flex items-center justify-center drop-shadow-2xl`}
-  color: ${colors.resturantCardItemColor}
+  ${tw`my-2 flex`};
+  @media screen and (max-width: 768px) {
+    ${tw` flex w-full my-2 px-1`};
+  }
+  color: ${colors.resturantCardItemColor};
 `;
 
 export const RestuarantImageContainer = styled.div`
-  ${tw`flex items-center`}
+  @media screen and (max-width: 768px) {
+    ${tw`w-1/2`}
+  }
+  ${tw`flex items-center object-cover`}
 `;
 
 export const RestuarantImage = styled.img`
-  ${tw`w-64 h-48 rounded-lg`}
+  ${tw`w-full rounded-lg`};
+  @media screen and (max-width: 768px) {
+    ${tw`h-4/6`}
+  }
+  @media screen and (min-width: 768px) {
+    width: 200px;
+    aspect-ratio: 2 / 1.6;
+  }
 `;
 
 export const RestuarantTextContainer = styled.div`
-  ${tw`px-6`}
+  ${tw`px-2`}
+
+  @media screen and (max-width : 768px) {
+    ${tw`w-1/2`}
+  }
 `;
 
 export const RestuarantHeading = styled.h1`

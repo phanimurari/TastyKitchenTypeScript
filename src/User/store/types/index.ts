@@ -48,17 +48,15 @@ export interface restaurantsServicePropsTypes {
   sortBy: string;
 }
 
-
 export interface foodItemObjectTypes {
-  name: string
-  cost: number
-  food_type: string
-  image_url: string
-  id: string
-  rating: number
-  quantity: number
+  name: string;
+  cost: number;
+  food_type: string;
+  image_url: string;
+  id: string;
+  rating: number;
+  quantity: number;
 }
-
 
 export interface restuarantsDataDetailsObjectType {
   id: string;
@@ -71,4 +69,3 @@ export interface restuarantsDataDetailsObjectType {
   costForTwo: number;
   itemsCount: number;
 }
-

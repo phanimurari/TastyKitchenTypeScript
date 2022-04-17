@@ -67,7 +67,7 @@ const RestuarntListComponent = (props: RestuarntListComponentTypes) => {
           );
         }
       )}
-    </RestuarantList>
+    </RestuarantList >
   );
 };
 

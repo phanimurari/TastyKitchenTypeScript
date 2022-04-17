@@ -37,7 +37,6 @@ class RestaurantsStore {
   ) => {
     this.restaurantsApiStatus = API_FETCHING;
 
-
     const url = `${getPopularRestauartsApiURL}?offset=${offset}&limit=${limit}&sort_by_rating=${sortBy}`;
     const restaurantsPromise = this.restaurantsService.getRestaurants(url);
 

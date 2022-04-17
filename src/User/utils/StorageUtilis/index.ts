@@ -1,3 +1,2 @@
-
-
-export const getResturantSpecificData = () => localStorage.getItem("resturantSpecificData");
+export const getResturantSpecificData = () =>
+  localStorage.getItem("resturantSpecificData");

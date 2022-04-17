@@ -20,20 +20,19 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
 
   getInjectedProps = (): InjectedProps => this.props as InjectedProps;
 
-
-  getRestaurantDetailsStore = () => this.getInjectedProps().restaurantDetailsStore;
-
+  getRestaurantDetailsStore = () =>
+    this.getInjectedProps().restaurantDetailsStore;
 
   getRestuarantDetails = async () => {
     const { history } = this.props;
     const { location } = history;
     const { pathname } = location;
     const resturantId = pathname.split("/")[3];
-    await this.getRestaurantDetailsStore().getRestuarantDetails(resturantId)
+    await this.getRestaurantDetailsStore().getRestuarantDetails(resturantId);
   };
 
   onClickDecrementFoodItemQuantity = async (id: string) => {
-    const { restaurantFoodItemsList } = this.getRestaurantDetailsStore()
+    const { restaurantFoodItemsList } = this.getRestaurantDetailsStore();
 
     const decrementItemsDataQuantity = restaurantFoodItemsList.map((item) => {
       if (item.id === id && item.quantity > 0) {
@@ -82,8 +81,7 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
   };
 
   onClickIncrementFoodItemQuantity = (id: string) => {
-    const { restaurantFoodItemsList } = this.getRestaurantDetailsStore()
-
+    const { restaurantFoodItemsList } = this.getRestaurantDetailsStore();
 
     const incrementedItemsDataQuantity = restaurantFoodItemsList.map((item) => {
       if (item.id === id) {
@@ -152,7 +150,10 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
   renderFailureView = () => <h1>Failure view</h1>;
 
   renderRestuarantDetails = () => {
-    const { restaurantDetails, restaurantFoodItemsList } = this.getRestaurantDetailsStore()
+    const {
+      restaurantDetails,
+      restaurantFoodItemsList,
+    } = this.getRestaurantDetailsStore();
     return (
       <RestuarantDetails
         resturantData={restaurantDetails}
@@ -164,8 +165,7 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
   };
 
   renderBasedOnApiStatus = () => {
-
-    const { restaurantDetailsApiStatus } = this.getRestaurantDetailsStore()
+    const { restaurantDetailsApiStatus } = this.getRestaurantDetailsStore();
 
     switch (restaurantDetailsApiStatus) {
       case API_FETCHING:
@@ -177,8 +177,6 @@ class RestuarantDetailsRoute extends Component<InjectedProps> {
       default:
         return null;
     }
-
-
   };
 
   render() {

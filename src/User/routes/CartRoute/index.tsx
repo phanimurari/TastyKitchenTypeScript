@@ -38,7 +38,7 @@ class CartRoute extends Component<cartItemsDataTypes> {
   }
 
   getCartItemsDataFromLocalStorage = () => {
-    const resturantSpecificData = getResturantSpecificData()
+    const resturantSpecificData = getResturantSpecificData();
     if (resturantSpecificData) {
       const parsedResturantData = JSON.parse(resturantSpecificData);
       const { itemsData } = parsedResturantData;
@@ -55,7 +55,7 @@ class CartRoute extends Component<cartItemsDataTypes> {
       return item;
     });
 
-    const dataFromLocalStorage = getResturantSpecificData()
+    const dataFromLocalStorage = getResturantSpecificData();
 
     if (dataFromLocalStorage !== null) {
       const itemsDataFromLocalStorage = JSON.parse(dataFromLocalStorage)
@@ -103,7 +103,7 @@ class CartRoute extends Component<cartItemsDataTypes> {
       return item;
     });
 
-    const dataFromLocalStorage = getResturantSpecificData()
+    const dataFromLocalStorage = getResturantSpecificData();
 
     if (dataFromLocalStorage !== null) {
       const itemsDataFromLocalStorage = JSON.parse(dataFromLocalStorage)

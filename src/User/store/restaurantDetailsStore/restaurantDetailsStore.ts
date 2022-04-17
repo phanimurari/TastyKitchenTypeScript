@@ -1,10 +1,17 @@
-import { API_FAILED, API_FETCHING, API_INITIAL, API_SUCCESS } from "@ib/api-constants";
+import {
+  API_FAILED,
+  API_FETCHING,
+  API_INITIAL,
+  API_SUCCESS,
+} from "@ib/api-constants";
 import { action, observable } from "mobx";
 import { statusCodes } from "../../../common/constants/ApiConstants";
 import RestaurantDetailsService from "../../services/restaurantDetailService/RestaurantDetailService";
-import { foodItemObjectTypes, restuarantsDataDetailsObjectType } from "../types";
+import {
+  foodItemObjectTypes,
+  restuarantsDataDetailsObjectType,
+} from "../types";
 import { FoodItemModel } from "./foodItemModel";
-
 
 const restauartDetailsApiURL = "https://apis.ccbp.in/restaurants-list";
 
@@ -26,7 +33,7 @@ class RestaurantDetailsStore {
       costForTwo: 0,
       itemsCount: 0,
     };
-    this.restaurantFoodItemsList = []
+    this.restaurantFoodItemsList = [];
     this.restaurantDetailsApiStatus = API_INITIAL;
     this.restaurantDetailsService = restaurantDetailsService;
     this.init();
@@ -49,9 +56,11 @@ class RestaurantDetailsStore {
   @action.bound getRestuarantDetails = async (id: string) => {
     this.restaurantDetailsApiStatus = API_FETCHING;
 
-    const url = `${restauartDetailsApiURL}/${id}`
+    const url = `${restauartDetailsApiURL}/${id}`;
 
-    const restaurantsPromise = this.restaurantDetailsService.getRestaurantDetails(url);
+    const restaurantsPromise = this.restaurantDetailsService.getRestaurantDetails(
+      url
+    );
 
     const fetchResponse = await restaurantsPromise.then((response: any) =>
       response.json()
@@ -64,14 +73,12 @@ class RestaurantDetailsStore {
     }
   };
 
-
   @action setRestaurantDetailsApiError = () => {
     this.restaurantDetailsApiStatus = API_FAILED;
-  }
-
+  };
 
   @action setRestaurantDetailsApiResponse = (response: any) => {
-    this.restaurantDetailsApiStatus = API_SUCCESS
+    this.restaurantDetailsApiStatus = API_SUCCESS;
 
     const caseConvertedResturantDetailsData = {
       id: response.id,
@@ -85,11 +92,11 @@ class RestaurantDetailsStore {
       itemsCount: response.items_count,
     };
 
-    const dataFromLocalStorage = localStorage.getItem(
-      "resturantSpecificData"
-    );
+    const dataFromLocalStorage = localStorage.getItem("resturantSpecificData");
 
-    const caseConvertedFoodItemsData = response.food_items.map((item: foodItemObjectTypes) => new FoodItemModel(item))
+    const caseConvertedFoodItemsData = response.food_items.map(
+      (item: foodItemObjectTypes) => new FoodItemModel(item)
+    );
 
     if (dataFromLocalStorage !== null) {
       const itemsDataFromLocalStorage = JSON.parse(dataFromLocalStorage)
@@ -106,14 +113,13 @@ class RestaurantDetailsStore {
           return fetchedItem;
         }
       );
-      this.restaurantDetails = caseConvertedResturantDetailsData
-      this.restaurantFoodItemsList = updateFetchedDataQuantity
+      this.restaurantDetails = caseConvertedResturantDetailsData;
+      this.restaurantFoodItemsList = updateFetchedDataQuantity;
+    } else {
+      this.restaurantDetails = caseConvertedResturantDetailsData;
+      this.restaurantFoodItemsList = caseConvertedFoodItemsData;
     }
-    else {
-      this.restaurantDetails = caseConvertedResturantDetailsData
-      this.restaurantFoodItemsList = caseConvertedFoodItemsData
-    }
-  }
+  };
 }
 
 export default RestaurantDetailsStore;
