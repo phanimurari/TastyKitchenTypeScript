@@ -2,7 +2,7 @@
   "name": "tasty-kitchens",
   "private": true,
   "version": "1.0.0",
-  "homepage": "http://phanimurari.github.io/TastyKitchenTypeScript",
+  "homepage": "http://phanimurari.github.io/TastyKitchenTypeScript/",
   "engines": {
     "node": "^10.13 || 12 || 14 || 15",
     "npm": ">=6"

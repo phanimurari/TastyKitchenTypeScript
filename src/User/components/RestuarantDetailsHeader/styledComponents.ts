@@ -18,7 +18,7 @@ export const ResturantDetailsImageContainer = styled.div`
 `;
 
 export const ResturantDetailsImage = styled.img`
-  ${tw`w-3/5 rounded-lg`}
+  ${tw`w-2/5 rounded-lg`}
 `;
 
 export const ResturantDetailsTextContainer = styled.div`
